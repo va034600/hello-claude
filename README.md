@@ -39,4 +39,4 @@ make test-all
 
 ## ライセンス
 
-ISC
+MIT
