@@ -30,8 +30,6 @@
       "Write(.env*)",
       "Write(**/secrets/**)",
 
-      "Bash(git push:*)",
-      "Bash(git commit:*)",
       "Bash(git reset:*)",
       "Bash(git rebase:*)",
 
