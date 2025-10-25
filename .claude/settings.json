@@ -13,12 +13,32 @@
       "Bash(npm test)"
     ],
     "deny": [
+      "Bash(sudo:*)",
+
       "Read(../**)",
       "Read(/**)",
+
       "Bash(rm -rf:*)",
-      "Bash(sudo:*)",
+
       "Read(.env)",
-      "Write(../**)"
+      "Read(id_rsa)",
+      "Read(id_ed25519)",
+      "Read(**/*.key)",
+      "Read(**/*_token)",
+      "Read(**/.token*)",
+      "Read(**/token)",
+      "Read(**/api_key*)",
+      "Read(**/*secret*)",
+
+      "Write(../**)",
+      "Write(.env*)",
+      "Write(**/secrets/**)",
+
+      "Bash(git reset:*)",
+      "Bash(git rebase:*)",
+
+      "Bash(psql:*)",
+      "Bash(mysql:*)"
     ]
   }
 }
