@@ -1,7 +1,7 @@
 {
-  "name": "hello-claude",
+  "name": "hello-claude-node-service",
   "version": "1.0.0",
-  "description": "",
+  "description": "Node.js microservice for hello-claude",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
