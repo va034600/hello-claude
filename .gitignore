@@ -22,7 +22,6 @@ coverage.html
 coverage.out
 vendor/
 go.work
-go.sum
 services/go-service/server
 
 # IDE
