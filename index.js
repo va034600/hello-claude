@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // 例: APIエンドポイント
 app.get("/api/hello", (req, res) => {
