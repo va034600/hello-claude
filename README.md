@@ -1,15 +1,16 @@
 # hello-claude
 
-Express.jsを使用したシンプルなNode.js APIサーバーのサンプルプロジェクトです。
+Ginを使用したシンプルなGo APIサーバーのサンプルプロジェクトです。
 
 ## 概要
 
-このプロジェクトは、Express 5.1.0を使用した基本的なREST APIサーバーの実装例です。`/api/hello` エンドポイントを提供し、JSON形式でレスポンスを返します。
+このプロジェクトは、Gin Web Frameworkを使用した基本的なREST APIサーバーの実装例です。`/api/hello` エンドポイントを提供し、JSON形式でレスポンスを返します。
+
+クリーンアーキテクチャを意識した構成で、ビジネスロジック層とHTTPハンドラー層を分離しています。
 
 ## 必要要件
 
-- Node.js (v14以上推奨)
-- npm (Node.jsに含まれています)
+- Go 1.21以上
 
 ## インストール
 
@@ -21,10 +22,12 @@ cd hello-claude
 
 2. 依存パッケージをインストールします:
 ```bash
-npm install
+make deps
+# または
+go mod download
 ```
 
-3. 環境変数を設定します（オプション）:
+3. 環境変数を設定します(オプション):
 ```bash
 cp .env.template .env
 # .envファイルを編集して必要な値を設定
@@ -35,13 +38,14 @@ cp .env.template .env
 ### サーバーの起動
 
 ```bash
-npm start
+make run
+# または
+make dev  # 開発モード
 ```
 
-または開発モードで起動:
-
+直接実行する場合:
 ```bash
-npm run dev
+go run cmd/app/main.go
 ```
 
 サーバーは `http://localhost:3000` で起動します。
@@ -59,20 +63,60 @@ curl http://localhost:3000/api/hello
 {"message": "Hello from server!"}
 ```
 
+### テストの実行
+
+```bash
+make test
+# または
+go test -v ./...
+```
+
+カバレッジ付きでテストを実行:
+```bash
+make test-coverage
+```
+
 ## 依存関係
 
-- **express** (^5.1.0): 高速で柔軟なNode.js Webアプリケーションフレームワーク
+- **gin-gonic/gin** (v1.10.0): 高速で柔軟なGo Webフレームワーク
 
 ## プロジェクト構成
 
 ```
 hello-claude/
-├── index.js              # メインのサーバーファイル
-├── package.json          # プロジェクト設定と依存関係
-├── .env.template         # 環境変数のテンプレート
-├── .gitignore           # Gitで無視するファイルの設定
-└── README.md            # このファイル
+├── cmd/
+│   └── app/            # mainパッケージ、エントリーポイント
+│       └── main.go
+├── internal/
+│   ├── api/            # HTTPハンドラ（ルーティング）
+│   │   ├── router.go
+│   │   ├── handler.go
+│   │   └── handler_test.go
+│   ├── service/        # ビジネスロジック層
+│   │   ├── hello.go
+│   │   └── hello_test.go
+│   ├── model/          # ドメインモデル、構造体
+│   │   └── response.go
+│   └── config/         # 設定読み込み（env, yamlなど）
+│       └── config.go
+├── pkg/                # 再利用可能な共通ライブラリ
+├── go.mod
+├── go.sum
+├── Makefile           # ビルド・テストコマンド
+└── README.md          # このファイル
 ```
+
+## 利用可能なMakeコマンド
+
+- `make build` - アプリケーションをビルド
+- `make run` - アプリケーションを実行
+- `make dev` - 開発モードで実行
+- `make test` - テストを実行
+- `make test-coverage` - カバレッジ付きでテストを実行
+- `make deps` - 依存関係をインストール
+- `make clean` - ビルド成果物を削除
+- `make fmt` - コードをフォーマット
+- `make help` - ヘルプを表示
 
 ## ライセンス
 
