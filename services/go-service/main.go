@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"os"
 
 	"github.com/va034600/hello-claude/services/go-service/internal/api"
 	"github.com/va034600/hello-claude/services/go-service/internal/config"
@@ -20,6 +19,5 @@ func main() {
 	log.Printf("Server running at http://localhost%s", addr)
 	if err := router.Run(addr); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
-		os.Exit(1)
 	}
 }
