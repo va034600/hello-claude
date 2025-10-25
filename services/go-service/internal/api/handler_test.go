@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	"github.com/va034600/hello-claude/internal/model"
+	"github.com/va034600/hello-claude/services/go-service/internal/model"
 )
 
 func TestGetHello(t *testing.T) {

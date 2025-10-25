@@ -1,8 +1,12 @@
 # Environment variables
 .env
 
-# Node.js (legacy)
+# Node.js
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
 
 # Go
 bin/
@@ -15,8 +19,11 @@ dist/
 *.test
 *.out
 coverage.html
+coverage.out
 vendor/
 go.work
+go.sum
+services/go-service/server
 
 # IDE
 .vscode/

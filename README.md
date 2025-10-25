@@ -1,58 +1,116 @@
 # hello-claude
 
-Ginを使用したシンプルなGo APIサーバーのサンプルプロジェクトです。
+マイクロサービスアーキテクチャを採用したシンプルなAPIサーバーのサンプルプロジェクトです。
 
 ## 概要
 
-このプロジェクトは、Gin Web Frameworkを使用した基本的なREST APIサーバーの実装例です。`/api/hello` エンドポイントを提供し、JSON形式でレスポンスを返します。
+このプロジェクトは、GoとNode.jsの2つのマイクロサービスで構成されています。どちらも同じ `/api/hello` エンドポイントを提供し、JSON形式でレスポンスを返します。
 
-クリーンアーキテクチャを意識した構成で、ビジネスロジック層とHTTPハンドラー層を分離しています。
+### サービス構成
+
+- **Go Service**: Gin Web Frameworkを使用したGoベースのマイクロサービス
+  - クリーンアーキテクチャを採用
+  - ポート: 3000（デフォルト）
+
+- **Node.js Service**: Express.jsを使用したNode.jsベースのマイクロサービス
+  - シンプルなMVCアーキテクチャ
+  - ポート: 3000（デフォルト）
+
+## プロジェクト構成
+
+```
+hello-claude/
+├── services/
+│   ├── go-service/          # Goマイクロサービス
+│   │   ├── main.go
+│   │   ├── internal/
+│   │   │   ├── api/         # HTTPハンドラ
+│   │   │   ├── service/     # ビジネスロジック
+│   │   │   ├── model/       # データモデル
+│   │   │   └── config/      # 設定
+│   │   ├── go.mod
+│   │   └── README.md
+│   │
+│   └── node-service/        # Node.jsマイクロサービス
+│       ├── index.js
+│       ├── index.test.js
+│       ├── package.json
+│       └── README.md
+│
+├── Makefile                 # ビルド・実行コマンド
+└── README.md               # このファイル
+```
 
 ## 必要要件
 
+### Go Service
 - Go 1.21以上
+
+### Node.js Service
+- Node.js 18以上
+- npm または yarn
 
 ## インストール
 
-1. リポジトリをクローンします:
+### リポジトリをクローン
+
 ```bash
 git clone https://github.com/va034600/hello-claude.git
 cd hello-claude
 ```
 
-2. 依存パッケージをインストールします:
+### Go Serviceのセットアップ
+
 ```bash
-make deps
-# または
+cd services/go-service
 go mod download
+cd ../..
 ```
 
-3. 環境変数を設定します(オプション):
+### Node.js Serviceのセットアップ
+
 ```bash
-cp .env.template .env
-# .envファイルを編集して必要な値を設定
+cd services/node-service
+npm install
+cd ../..
 ```
 
 ## 使用方法
 
-### サーバーの起動
+### Makefileを使用する場合
+
+プロジェクトルートから各サービスを起動できます:
 
 ```bash
-make run
-# または
-make dev  # 開発モード
+# Go Serviceを起動
+make run-go
+
+# Node.js Serviceを起動
+make run-node
+
+# 両方のサービスをテスト
+make test-all
 ```
 
-直接実行する場合:
+### 個別に起動する場合
+
+#### Go Service
+
 ```bash
-go run cmd/app/main.go
+cd services/go-service
+go run main.go
 ```
 
-サーバーは `http://localhost:3000` で起動します。
+#### Node.js Service
+
+```bash
+cd services/node-service
+npm start
+```
 
 ### APIエンドポイントのテスト
 
-サーバー起動後、以下のコマンドでAPIをテストできます:
+どちらのサービスも同じエンドポイントを提供します（ポートを適宜変更してください）:
 
 ```bash
 curl http://localhost:3000/api/hello
@@ -63,59 +121,44 @@ curl http://localhost:3000/api/hello
 {"message": "Hello from server!"}
 ```
 
-### テストの実行
+## テスト
+
+### Go Serviceのテスト
 
 ```bash
-make test
-# または
+cd services/go-service
 go test -v ./...
 ```
 
-カバレッジ付きでテストを実行:
+### Node.js Serviceのテスト
+
 ```bash
-make test-coverage
+cd services/node-service
+npm test
 ```
 
-## 依存関係
+### 全サービスのテスト（Makefile使用）
 
-- **gin-gonic/gin** (v1.10.0): 高速で柔軟なGo Webフレームワーク
-
-## プロジェクト構成
-
+```bash
+make test-all
 ```
-hello-claude/
-├── cmd/
-│   └── app/            # mainパッケージ、エントリーポイント
-│       └── main.go
-├── internal/
-│   ├── api/            # HTTPハンドラ（ルーティング）
-│   │   ├── router.go
-│   │   ├── handler.go
-│   │   └── handler_test.go
-│   ├── service/        # ビジネスロジック層
-│   │   ├── hello.go
-│   │   └── hello_test.go
-│   ├── model/          # ドメインモデル、構造体
-│   │   └── response.go
-│   └── config/         # 設定読み込み（env, yamlなど）
-│       └── config.go
-├── pkg/                # 再利用可能な共通ライブラリ
-├── go.mod
-├── go.sum
-├── Makefile           # ビルド・テストコマンド
-└── README.md          # このファイル
-```
+
+## 開発
+
+各サービスは独立して開発・デプロイが可能です。詳細は各サービスのREADMEを参照してください:
+
+- [Go Service README](services/go-service/README.md)
+- [Node.js Service README](services/node-service/README.md)
 
 ## 利用可能なMakeコマンド
 
-- `make build` - アプリケーションをビルド
-- `make run` - アプリケーションを実行
-- `make dev` - 開発モードで実行
-- `make test` - テストを実行
-- `make test-coverage` - カバレッジ付きでテストを実行
-- `make deps` - 依存関係をインストール
+- `make run-go` - Go Serviceを実行
+- `make run-node` - Node.js Serviceを実行
+- `make test-go` - Go Serviceのテストを実行
+- `make test-node` - Node.js Serviceのテストを実行
+- `make test-all` - 全サービスのテストを実行
+- `make build-go` - Go Serviceをビルド
 - `make clean` - ビルド成果物を削除
-- `make fmt` - コードをフォーマット
 - `make help` - ヘルプを表示
 
 ## ライセンス

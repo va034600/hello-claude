@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/va034600/hello-claude/internal/service"
+	"github.com/va034600/hello-claude/services/go-service/internal/service"
 )
 
 // HelloHandler は /api/hello エンドポイントのハンドラー

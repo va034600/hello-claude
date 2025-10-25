@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/va034600/hello-claude/internal/api"
-	"github.com/va034600/hello-claude/internal/config"
+	"github.com/va034600/hello-claude/services/go-service/internal/api"
+	"github.com/va034600/hello-claude/services/go-service/internal/config"
 )
 
 func main() {

@@ -1,4 +1,4 @@
-module github.com/va034600/hello-claude
+module github.com/va034600/hello-claude/services/go-service
 
 go 1.21
 

@@ -1,6 +1,6 @@
 package service
 
-import "github.com/va034600/hello-claude/internal/model"
+import "github.com/va034600/hello-claude/services/go-service/internal/model"
 
 // HelloService はhelloエンドポイントのビジネスロジックを提供します
 type HelloService struct{}
